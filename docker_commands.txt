@@ -1,0 +1,7 @@
+Mongo
+docker run -p 27017:27017 --name afs-mongo -d mongo
+
+
+Node 
+docker build -t markche/node-web-app .
+docker run --name mean -v C:\Users\585505\Desktop\Projects\docker_web_app:/usr/src/app -p 49160:8080 --link afs-mongo:afs-mongo -d markche/node-web-app
