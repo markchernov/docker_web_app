@@ -1,7 +1,8 @@
 'use strict';
 
 const express = require('express');
-var mongodb = require('mongodb');
+const mongodb = require('mongodb');
+const path = require('path');
 
 // Constants
 const PORT = 8080;
@@ -21,11 +22,19 @@ MongoClient.connect("mongodb://afs-mongo:27017/integration_test", function(err, 
   console.log('Running on http://' + HOST + ':' + PORT);
 });
 
-
-
 // App
 const app = express();
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/angular', express.static(path.join(__dirname, '/node_modules/angular/')));
+
+// test assets from public
 app.get('/', function (req, res) {
+  res.status(200).sendFile(path.join(__dirname + '../public/index.html'));
+});
+
+
+// test DB
+app.get('/db', function (req, res) {
   
   db.collection("replicaset_mongo_client_collection").find({}, function(err, docs) {
   docs.each(function(err, doc) {
@@ -47,5 +56,3 @@ app.get('/test', function (req, res) {
   res.send('My Test Message\n');
 });
 
-// app.listen(PORT, HOST);
-// console.log('Running on http://' + HOST + ':' + PORT);

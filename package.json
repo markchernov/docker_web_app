@@ -10,6 +10,7 @@
   "dependencies": {
     "angular": "^1.6.4",
     "express": "^4.13.3",
-    "mongodb": "^2.2.29"
+    "mongodb": "^2.2.29",
+    "path": "^0.12.7"
   }
 }
