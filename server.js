@@ -36,20 +36,21 @@ app.get('/', function (req, res) {
 // test DB
 app.get('/db', function (req, res) {
   
-  db.collection("replicaset_mongo_client_collection").find({}, function(err, docs) {
+  db.collection("test_objects").find({}, function(err, docs) {
+  const response = [];  
   docs.each(function(err, doc) {
-      if(doc) {
-        console.log(doc);
-        res.send(doc);
+      if(err) {
+        throw Error("Error processing DB results")
       }
+      if(doc) {
+        console.log("Next element ", doc);
+        response.push(doc);
+      } 
       else {
-        res.send("Nothing found in DB");
+        res.send(response);
       }
     });
    });
-
-
-
 });
 
 app.get('/test', function (req, res) {
