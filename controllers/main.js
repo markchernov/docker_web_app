@@ -1,7 +1,28 @@
 const express = require('express');
 const router = express.Router();
-const conn = require('../server.js');
-console.log("conn ", conn);
+const MongoClient = require('mongodb').MongoClient;
+const connecting = new Promise(function(resolve, reject){
+            console.log(new Date(), ' Connecting to Db '); 
+            MongoClient.connect("mongodb://afs-mongo:27017/integration_test", function(err, database) {
+                if (err)  {
+                    reject(err)
+                } else {                
+                    console.log(new Date(), " Calling resolve with DB connection ", database.databaseName);
+                    resolve(database);
+                }
+            });  
+    });
+
+var db;
+
+console.log(new Date()," Connecting in main.js", connecting);
+connecting
+ .then(function(connection) {
+    console.log(new Date(), ' Connected to ', connection.databaseName);  
+    db =  connection })
+ .catch(function(err) {
+	  console.log(err);
+});  
 
 router.use(function timeLog (req, res, next) {
   console.log(req.url, ' Time: ', new Date());
@@ -16,8 +37,7 @@ router.get('/', function (req, res) {
 
 // test DB
 router.get('/db', function (req, res) {
-  const db = conn.then(function(result) { return result});  
-  console.log('DB object ', db);
+  console.log(new Date(), ' db  in /db ', db.databaseName);
   db.collection("test_objects").find({}, function(err, docs) {
   const response = [];  
   docs.each(function(err, doc) {
