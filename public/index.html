@@ -1,15 +1,20 @@
-<html ng-app>
+ <!DOCTYPE html>
+<html en="us" ng-app="app">
     <head>
         <title>AngularJS App</title>
-        <script src="angular/angular.js">          
-        </script>
+        <!-- angularjs-->
+        <script src="angular/angular.js"></script>
+        <!-- bootsrap css-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">       
+        <!-- The main app script-->
+        <!--<script src="app.js"></script> -->
+        <!-- components --> 
+        <script src="components/appComponent.js"></script>               
     </head>
-    <body>
-       <div>
-         <label>Name:</label>
-        <input type="text" ng-model="yourName" placeholder="Enter a name here">
-         <hr>
-        <h1>Hello {{yourName}}!</h1>
-        </div>     
-    </body>
+ 
+
+<body>
+    <menu-bar brand="Brand"></menu-bar>
+</body>
+
 </html>
